@@ -52,11 +52,13 @@ cd heart-disease-ml-app`
 
 ### Repository Structure
 heart-disease-ml-app/
-`│── app.py                  # Streamlit app
+`
+│── app.py                  # Streamlit app
 │── random_forest_best.joblib  # Saved model
 │── scaler.joblib           # Preprocessing scaler
 │── requirements.txt        # Dependencies
-│── README.md               # Documentation`
+│── README.md               # Documentation
+`
 
 ## Future Work
 Integrate with mobile health apps
