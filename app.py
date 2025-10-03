@@ -26,8 +26,8 @@ gender_val = 1 if gender == "Male" else 0
 chol_val = {"Normal":1, "Above Normal":2, "Well Above Normal":3}[chol]
 gluc_val = {"Normal":1, "Above Normal":2, "Well Above Normal":3}[gluc]
 
-X = np.array([[age, gender_val, ap_hi, ap_lo, chol_val, gluc_val,
-               smoke, alco, active, bmi]])
+X = np.array([[age, gender_val, ap_hi, ap_lo, chol_val, gluc_val, bmi]])
+
 
 X_scaled = scaler.transform(X)
 
@@ -40,3 +40,4 @@ if pred == 1:
     st.error(f"High risk of heart disease ⚠️ (Probability: {proba:.2f})")
 else:
     st.success(f"Low risk of heart disease ✅ (Probability: {proba:.2f})")
+
