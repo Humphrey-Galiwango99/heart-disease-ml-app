@@ -8,6 +8,7 @@ model = joblib.load("random_forest_best.joblib")
 scaler = joblib.load("scaler.joblib")
 
 st.title("Heart Disease Risk Predictor (Uganda)")
+st.write("Enter patient details to check heart disease risk:")
 
 # ---- Collect inputs ----
 age = st.number_input("Age (years)", 18, 100, 40)
@@ -27,28 +28,29 @@ gender_val = 1 if gender == "Male" else 0
 chol_val = {"Normal":1, "Above Normal":2, "Well Above Normal":3}[chol]
 gluc_val = {"Normal":1, "Above Normal":2, "Well Above Normal":3}[gluc]
 
-# Compute BMI
+# Derived features
+age_years = age  # keep both 'age' and 'age_years' since model trained with both
 bmi = weight / ((height/100)**2)
 
-# Age group encoding (manual one-hot)
+# Age group one-hot encoding
 age_group_26_35 = 1 if 26 <= age <= 35 else 0
 age_group_36_45 = 1 if 36 <= age <= 45 else 0
 age_group_46_55 = 1 if 46 <= age <= 55 else 0
 age_group_56_65 = 1 if 56 <= age <= 65 else 0
 age_group_66plus = 1 if age >= 66 else 0
 
-# Build dataframe with correct feature order
-cols = ["age_years","gender","ap_hi","ap_lo","cholesterol","gluc","smoke",
-        "alco","active","bmi","age_group_26-35","age_group_36-45",
-        "age_group_46-55","age_group_56-65","age_group_66+"]
+# ---- Build dataframe with exact feature names ----
+cols = ['age', 'gender', 'ap_hi', 'ap_lo', 'cholesterol', 'gluc',
+        'smoke', 'alco', 'active', 'age_years', 'bmi',
+        'age_group_26-35', 'age_group_36-45', 'age_group_46-55',
+        'age_group_56-65', 'age_group_66+']
 
 X = pd.DataFrame([[age, gender_val, ap_hi, ap_lo, chol_val, gluc_val,
-                   smoke, alco, active, bmi,
-                   age_group_26_35, age_group_36_45,
-                   age_group_46_55, age_group_56_65, age_group_66plus]], 
-                 columns=cols)
+                   smoke, alco, active, age_years, bmi,
+                   age_group_26_35, age_group_36_45, age_group_46_55,
+                   age_group_56_65, age_group_66plus]], columns=cols)
 
-# Scale numeric features
+# ---- Scale numeric features ----
 X_scaled = scaler.transform(X)
 
 # ---- Prediction ----
@@ -57,6 +59,6 @@ proba = model.predict_proba(X_scaled)[0,1]
 
 # ---- Output ----
 if pred == 1:
-    st.error(f"High risk of heart disease (Probability: {proba:.2f})")
+    st.error(f"⚠️ High risk of heart disease (Probability: {proba:.2f})")
 else:
-    st.success(f"Low risk of heart disease (Probability: {proba:.2f})")
+    st.success(f"✅ Low risk of heart disease (Probability: {proba:.2f})")
