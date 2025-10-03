@@ -38,3 +38,31 @@ High recall ensures fewer sick patients are missed
 The trained model is deployed using Streamlit.
 ### Live App: Heart Disease Predictor
 Users can enter patient details (age, BP, cholesterol, BMI, lifestyle) and receive a risk prediction instantly.
+
+# How to Run Locally
+1. Clone repo:
+`git clone https://github.com/your-username/heart-disease-ml-app.git
+cd heart-disease-ml-app`
+
+2. Install dependencies:
+`pip install -r requirements.txt`
+
+3. Run app:
+`streamlit run app.py`
+
+### Repository Structure
+heart-disease-ml-app/
+│── app.py                  # Streamlit app
+│── random_forest_best.joblib  # Saved model
+│── scaler.joblib           # Preprocessing scaler
+│── requirements.txt        # Dependencies
+│── README.md               # Documentation
+
+## Future Work
+Integrate with mobile health apps
+Expand dataset with hospital records in Uganda
+Build a clinician dashboard for real-time patient triage
+
+### Author
+Humphrey Galiwango
+Refactory Uganda – AI/ML Capstone July 2025 Intake
